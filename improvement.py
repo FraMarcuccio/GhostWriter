@@ -6,7 +6,10 @@ import keyboard
 import time
 import pyautogui
 
-#Seleziona testo, control+c, poi premi altgr e verrà scritta la risposta
+# Seleziona testo, control+c, poi premi altgr e verrà scritta la risposta, premi spazio per interrompere
+
+# Variabile di controllo per tracciare se è stata copiata una nuova parola nella clipboard
+nuova_parola_copiata = False
 
 def move_cursor_to_textbox(x, y):
     # Sposta il cursore del mouse nella posizione desiderata
@@ -21,7 +24,7 @@ def move_output_window():
     x, y = pyautogui.position()
 
     # Muovi la finestra di output vicino al cursore
-    #pyautogui.moveTo(x + 20, y + 20)
+    # pyautogui.moveTo(x + 20, y + 20)
 
 def scrivi_dove_punta(parola):
     # Ottieni le coordinate del mouse
@@ -30,9 +33,24 @@ def scrivi_dove_punta(parola):
     # Sposta il cursore del mouse alle coordinate ottenute
     pyautogui.moveTo(x, y)
 
-    # Scrivi la parola
-    pyautogui.typewrite(parola, interval=0.005)
+    # Inizializza la variabile di controllo
+    global nuova_parola_copiata
+    nuova_parola_copiata = False
 
+    for carattere in parola:
+        if keyboard.is_pressed('space'):
+            # Interrompi la scrittura se il tasto "Spazio" è premuto
+            break
+        else:
+            # Scrivi il carattere
+            pyautogui.typewrite(carattere)
+            # Controlla se una nuova parola è stata copiata nella clipboard durante la scrittura
+            if pyperclip.waitForNewPaste(0.1):
+                nuova_parola_copiata = True
+                break
+
+    # Dopo l'interruzione, rimuovi tutti gli elementi dalla clipboard
+    pyperclip.copy('')
 
 def estrai_domande_risposte_da_testo(testo):
     linee = testo.split('\n')
@@ -115,7 +133,8 @@ def leggi_testo_selezionato():
     # Funzione per ottenere il testo selezionato con il cursore del mouse
     return pyperclip.paste()
 
-def main():
+# Loop principale
+while True:
     # Memorizza il contenuto della clipboard prima della pressione di AltGr
     clipboard_prima = pyperclip.paste()
 
@@ -152,28 +171,28 @@ def main():
 
         if domanda_migliore and risposta_migliore:
             # Muovi il cursore nella textbox
-            #move_cursor_to_textbox()
-            #move_output_window()
-            #move_cursor_to_textbox(x, y)
+            # move_cursor_to_textbox()
+            # move_output_window()
+            # move_cursor_to_textbox(x, y)
 
             # Scrivi il risultato nella textbox
-            #write_to_textbox(f"Domanda migliore: {domanda_migliore}\nRisposta migliore: {risposta_migliore}\n")
+            # write_to_textbox(f"Domanda migliore: {domanda_migliore}\nRisposta migliore: {risposta_migliore}\n")
             scrivi_dove_punta(risposta_migliore)
         else:
             # Scrivi un messaggio nel caso non ci siano corrispondenze nel database
             print("Nessuna corrispondenza trovata nel database.")
 
     # Muovi la finestra di output vicino al cursore
-    #move_output_window()
+    # move_output_window()
 
-# Loop infinito
-while True:
-    try:
-        # Esegui la funzione principale
-        main()
+    # Riprendi se premo altgr e non è stata copiata una nuova parola nella clipboard
+    while not nuova_parola_copiata and keyboard.is_pressed("AltGr"):
+        try:
+            # Esegui la funzione di scrittura
+            scrivi_dove_punta(risposta_migliore)
 
-        # Attendi prima di eseguire nuovamente
-        time.sleep(2.5)
-    except Exception as e:
-        # Ignora le eccezioni e continua il loop
-        pass
+            # Attendi prima di eseguire nuovamente
+            time.sleep(0.5)
+        except Exception as e:
+            # Ignora le eccezioni e continua il loop
+            pass
