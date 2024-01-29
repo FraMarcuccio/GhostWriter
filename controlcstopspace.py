@@ -6,7 +6,7 @@ import keyboard
 import time
 import pyautogui
 
-#Seleziona testo, control+c, poi premi altgr e verrà scritta la risposta
+#Seleziona testo, control+c, poi premi altgr e verrà scritta la risposta, premi spazio per interrompere
 
 def move_cursor_to_textbox(x, y):
     # Sposta il cursore del mouse nella posizione desiderata
@@ -30,9 +30,20 @@ def scrivi_dove_punta(parola):
     # Sposta il cursore del mouse alle coordinate ottenute
     pyautogui.moveTo(x, y)
 
-    # Scrivi la parola
-    pyautogui.typewrite(parola, interval=0.005)
+    # Inizializza la variabile di controllo
+    interruzione_spazio = False
 
+    for carattere in parola:
+        if keyboard.is_pressed('space'):
+            # Interrompi la scrittura se il tasto "Spazio" è premuto
+            interruzione_spazio = True
+            break
+        else:
+            # Scrivi il carattere
+            pyautogui.typewrite(carattere)
+
+    # Dopo l'interruzione, rimuovi tutti gli elementi dalla clipboard
+    pyperclip.copy('')
 
 def estrai_domande_risposte_da_testo(testo):
     linee = testo.split('\n')
@@ -173,7 +184,8 @@ while True:
         main()
 
         # Attendi prima di eseguire nuovamente
-        time.sleep(2.5)
+        time.sleep(0,5)        
+        
     except Exception as e:
         # Ignora le eccezioni e continua il loop
         pass
