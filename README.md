@@ -5,6 +5,8 @@ When script is running, user can selects with mouse cursor a text on the screen,
 
 USES CASE: adding into forlder a docx with question-answer format. Question must be start with a number (1 to 9) and number cannot be indentated. Document must not use any tipe of intendatition
 
+OBJECTIVE: The script does not use control+v to paste the answer, but simulates real typing; it does not use a particular key combination, but a simple key
+
 There are 2 versions
 1) controlc.py: behaviours is the same descripted before
 2) controlcstopspace.py: adding stop writing when space is pressed
