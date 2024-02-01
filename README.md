@@ -6,14 +6,14 @@ When script is running, user can selects with mouse cursor a text on the screen,
 USES CASE: adding into forlder a docx with question-answer format. Question must be start with a number (1 to 9) and number cannot be indentated. Document must not use any tipe of intendatition
 
 There are 2 versions
-1)controlc.py: behaviours is the same descripted before
-2)controlcstopspace.py: adding stop writing when space is pressed
+1) controlc.py: behaviours is the same descripted before
+2) controlcstopspace.py: adding stop writing when space is pressed
 
 Other test version is
-3)multiprocess.py: tries to implement restore writing after stop with multiprocessing, but doesn't work
+3) multiprocess.py: tries to implement restore writing after stop with multiprocessing, but doesn't work
 
 Limitations
--controlc.py cannot be stopped after start writing and can be speed up or slow down based on interval value
--controlcstopspace.py can be stopped but after stop, there are no ways to restart the writing from point where it had been stopped
--controlcstopspace.py speeds of writing cannot be modified because of character loop, interval value doesn't work for single character speed
--multiprocess.py doesn't work
+- controlc.py cannot be stopped after start writing and can be speed up or slow down based on interval value
+- controlcstopspace.py can be stopped but after stop, there are no ways to restart the writing from point where it had been stopped
+- controlcstopspace.py speeds of writing cannot be modified because of character loop, interval value doesn't work for single character speed
+- multiprocess.py doesn't work
