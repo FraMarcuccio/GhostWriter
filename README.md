@@ -9,8 +9,9 @@ There are 2 versions
 1) controlc.py: behaviours is the same descripted before
 2) controlcstopspace.py: adding stop writing when space is pressed
 
-Other test version is
-3) multiprocess.py: tries to implement restore writing after stop with multiprocessing, but doesn't work
+Other test version are
+1) multiprocess.py: tries to implement restore writing after stop with multiprocessing, but doesn't work
+2) improvement.py: implement multiprocessing in a test script
 
 Limitations
 - controlc.py cannot be stopped after start writing and can be speed up or slow down based on interval value
