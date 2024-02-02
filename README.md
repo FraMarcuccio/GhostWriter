@@ -1,4 +1,4 @@
-# GhostWriter
+# GhostWriter TO EDIT
 
 Script takes a series of questions with related answare from a docx file, put then in a SQLite db and run in an infinite loop.
 When script is running, user can selects with mouse cursor a text on the screen, after copy the text with control+c in the clipboard, pressing altgr and script starting a match between selected test and questions in db to find related best answer, so starting writing the answer where user pointing with cursor.
